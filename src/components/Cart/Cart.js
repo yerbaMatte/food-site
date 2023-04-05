@@ -4,7 +4,7 @@ import Modal from '../UI/Modal';
 import CartItem from './CartItem';
 import classes from './Cart.module.css';
 import CartContext from '../../store/cart-context';
-import { Checkout } from './Checkout';
+import Checkout from './Checkout';
 
 const Cart = (props) => {
   const [isCheckout, setIsCheckout] = useState(false);
@@ -60,7 +60,7 @@ const Cart = (props) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckout && <Checkout />}
+      {isCheckout && <Checkout onCancel={props.onClose} />}
       {!isCheckout && modalActions}
     </Modal>
   );
