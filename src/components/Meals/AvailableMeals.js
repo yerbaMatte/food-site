@@ -13,6 +13,7 @@ const AvailableMeals = () => {
       const response = await fetch(
         'https://react-http-f2855-default-rtdb.firebaseio.com/meals.json'
       );
+      // when error occurs, the rest lines of useEffect code is not executed
       if (!response.ok) {
         throw new Error('Something went wrong!');
       }
@@ -30,13 +31,26 @@ const AvailableMeals = () => {
       setMeals(loadedMeals);
       setIsLoading(false);
     };
-    fetchMeals();
+    try {
+      fetchMeals();
+    } catch (error) {
+      setIsLoading(false);
+      setHttpError(error.message);
+    }
   }, []);
 
   if (isLoading) {
     return (
       <section className={classes.MealsLoading}>
         <p>Loading...</p>
+      </section>
+    );
+  }
+
+  if (httpError) {
+    return (
+      <section className={classes.MealsError}>
+        <p>{httpError.message}</p>
       </section>
     );
   }
