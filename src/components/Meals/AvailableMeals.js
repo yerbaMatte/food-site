@@ -31,12 +31,10 @@ const AvailableMeals = () => {
       setMeals(loadedMeals);
       setIsLoading(false);
     };
-    try {
-      fetchMeals();
-    } catch (error) {
+    fetchMeals().catch((error) => {
       setIsLoading(false);
       setHttpError(error.message);
-    }
+    });
   }, []);
 
   if (isLoading) {
@@ -50,7 +48,7 @@ const AvailableMeals = () => {
   if (httpError) {
     return (
       <section className={classes.MealsError}>
-        <p>{httpError.message}</p>
+        <p>{httpError}</p>
       </section>
     );
   }
